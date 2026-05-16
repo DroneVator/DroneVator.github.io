@@ -11,7 +11,7 @@
     box-sizing: border-box;
     text-decoration: none;
     outline: 0; border: none;
-    text-transform: capitalize;
+    text-transform: none;
     transition: all .2s linear;
 }
 
@@ -214,34 +214,59 @@ header .navbar ul li a:hover {
     flex: 1 1 48rem;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    max-width: 50rem; /* KUNCI: Membatasi lebar kontainer agar kotak otomatis patah jadi 2 baris (2x2) */
+    margin: 0 auto;   /* Memastikan seluruh formasi tetap berada di tengah area */
+    gap: 0;           /* Jarak diatur lewat margin box bawaanmu */
 }
 
 .about .row .counter .box {
-    width: 20rem;
-    background: #222;
+    width: 20rem;     /* Tetap pakai ukuran bawaanmu */
+    background: #222; /* Tetap pakai warna background bawaanmu */
     text-align: center;
-    padding: 2rem;
-    margin: 2rem
- }
+    padding: 2.5rem 2rem;
+    margin: 1.5rem;   /* Jarak antar kotak pas agar formasi 2x2 terlihat rapi */
+    border: 1px solid rgba(255, 223, 0, 0.1); /* Border tipis dengan sentuhan warna kuning */
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
 
- .about .row .counter .box span {
+/* Efek Angka Utama: Putih Bersih dengan Pendaran Kuning Menyala */
+.about .row .counter .box span {
     font-size: 4rem;
-    color: var(--yellow);
+    color: #ffffff; /* Angka utama tetap putih bersih sesuai request */
+    font-weight: 700;
+    /* Efek menyala kuning neon berlapis (gold neon glow) */
+    text-shadow: 
+        0 0 4px rgba(255, 223, 0, 0.8),
+        0 0 12px rgba(255, 223, 0, 0.5),
+        0 0 25px rgba(255, 223, 0, 0.2);
+}
 
- }
-
+/* Efek Teks Keterangan: Putih Halus dengan Glow Kuning Tipis */
 .about .row .counter .box h3 {
-    font-size: 2rem;
-    color: #fff;
-    
- }
+    font-size: 1.6rem;
+    color: #fff; 
+    font-weight: 500;
+    margin-top: 0.8rem;
+    /* Glow kuning tipis agar teks di bawahnya tetap mudah dibaca */
+    text-shadow: 0 0 6px rgba(255, 223, 0, 0.4);
+}
+
+/* Efek Interaktif Saat Kursor Diarahkan ke Box (Hover) */
+.about .row .counter .box:hover {
+    transform: translateY(-5px); /* Kotak naik sedikit */
+    background: #282828; /* Background sedikit lebih terang */
+    border-color: rgba(255, 223, 0, 0.5); /* Border kuning ikut menyala terang */
+    box-shadow: 0 8px 20px rgba(255, 223, 0, 0.15); /* Bayangan kotak ikut berpendar kuning lembut */
+}
 
  .education .box-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
+    gap: 2rem;
     padding: 1rem 0;
     padding-left: 3rem;
  }
@@ -388,7 +413,7 @@ header .navbar ul li a:hover {
 
 /* media queries */
 
-@media(max-width:1200px) {
+@media(max-width: 1200px) {
     html {
         font-size: 55%;
     }
@@ -396,58 +421,61 @@ header .navbar ul li a:hover {
     .home {
         padding: 1rem 4rem;
     }
-    
 }
 
-@media(max-width:991px) {
-  header {
-    left:-120%;
-  }
-  #menu {
-    display: block;
-  }
-  header.toggle {
-    left: 0%;
-  }
-
-  body {
-    padding: 0;
-}
-
-}
-
-
-
-@media(max-width:768px) {
-   html {
-    font-size: 50%;
-   }
-}
-
-@media(max-width:400px) {
-    
+@media(max-width: 991px) {
     header {
-      width: 100vw;
+        left: -120%;
+    }
+    #menu {
+        display: block;
+    }
+    header.toggle {
+        left: 0%;
+    }
+
+    body {
+        padding: 0;
+    }
+}
+
+/* 🌟 PERBAIKAN UTAMA: Standar HP & Tablet Kecil (Aman untuk semua jenis HP) */
+@media(max-width: 768px) {
+    html {
+        font-size: 50%;
+    }
+
+    /* Memaksa kontainer flexbox agar menyusun kotaknya ke bawah di HP */
+    .box-container {
+        display: flex;
+        flex-direction: column !important;
+        gap: 2rem;
+    }
+
+    /* Semua elemen box otomatis memenuhi lebar layar HP */
+    .about .row .counter .box,
+    .education .box-container .box,
+    .portofolio .box-container .box {
+        width: 100% !important;
     }
 
     .heading { 
-        margin: 0 3rem;
-    }
-
-    .about .row .counter .box {
-        width: 100%;
-
-    }
-
-    .education .box-container .box {
-        width: 100%;
-    }
-
-    .portofolio .box-container .box {
-        width: 100%;
+        margin: 0 2rem;
+        font-size: 3rem; /* Menjaga heading agar tidak kebesaran di HP */
     }
 
     .contact .row form {
         margin: 3rem 0;
-    } 
-  }
+    }
+}
+
+/* Tambahan khusus untuk HP super kecil agar margin tidak memakan space */
+@media(max-width: 400px) {
+    header {
+        width: 100vw;
+    }
+    
+    section {
+        padding: 2rem 1.5rem !important; /* Agar konten tidak mentok ke layar HP */
+    }
+}
